@@ -8,7 +8,7 @@ const getTeams = asyncHandler(async(req, res) => {
 
     try {
         response = await fetch(
-            `${process.env.SPORTY_MONK_BASE_URL}teams?page=${page}&per_page=10&include=players`,
+            `${process.env.SPORTY_MONK_BASE_URL}teams?page=${page}&per_page=100&include=players`,
             {
                 method: "GET",
                 headers: {
