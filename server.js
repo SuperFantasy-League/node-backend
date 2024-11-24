@@ -7,6 +7,7 @@ import connectDB from './config/db.js';
 import teamRoutes from "./routes/teamsRoutes.js";
 import playerRoutes from "./routes/playersRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import fixtureRoutes from "./routes/fixtureRoutes.js";
 
 dotenv.config()
 
@@ -26,6 +27,7 @@ app.use('/api/health-check', (req, res) => {
 app.use('/api/teams', teamRoutes);
 app.use('/api/players', playerRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/fixtures", fixtureRoutes);
 
 const PORT = process.env.PORT;
 

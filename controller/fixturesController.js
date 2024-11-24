@@ -1,14 +1,13 @@
 import asyncHandler from 'express-async-handler';
 
-const getPlayersStatsByFixture = asyncHandler(async(req, res) => {
-    const {id} = req.params;
+const getLeagueFixtures = asyncHandler(async(req, res) => {
    
     let response;
     let responseData = {};
 
     try {
         response = await fetch(
-            `${process.env.API_FOOTBALL_BASE_URL}fixtures/players?fixture=${id}`,
+            `${process.env.API_FOOTBALL_BASE_URL}fixtures?league=39&season=${process.env.SEASON_YEAR}`,
             {
                 method: "GET",
                 headers: {
@@ -50,7 +49,7 @@ const getPlayersStatsByFixture = asyncHandler(async(req, res) => {
     });
 })
 
-const getPlayerStats = asyncHandler(async(req, res) => {
+const getTeamFixtures = asyncHandler(async(req, res) => {
     const {id} = req.params;
    
     let response;
@@ -58,7 +57,7 @@ const getPlayerStats = asyncHandler(async(req, res) => {
 
     try {
         response = await fetch(
-            `${process.env.API_FOOTBALL_BASE_URL}players?id=${id}&season=${process.env.SEASON_YEAR}`,
+            `${process.env.API_FOOTBALL_BASE_URL}fixtures?season=${process.env.SEASON_YEAR}&team=${id}`,
             {
                 method: "GET",
                 headers: {
@@ -100,7 +99,7 @@ const getPlayerStats = asyncHandler(async(req, res) => {
     });
 })
 
-export {
-    getPlayersStatsByFixture,
-    getPlayerStats
+export{
+    getLeagueFixtures,
+    getTeamFixtures
 }

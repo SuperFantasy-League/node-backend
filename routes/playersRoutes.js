@@ -1,23 +1,18 @@
 import express from 'express';
 
 import {
-    getPlayers,
-    getPlayerById,
-    searchForPlayer
+    getPlayersStatsByFixture,
+    getPlayerStats
 } from "../controller/playersController.js";
 
 const router = express.Router();
 
 router
-    .route("/get-players")
-    .get(getPlayers);
+    .route("/get-player-stats-by-fixture/:id")
+    .get(getPlayersStatsByFixture);
 
 router
-    .route("/get-player/:id")
-    .get(getPlayerById);
-
-router
-    .route("/search-for-player")
-    .get(searchForPlayer)
+    .route("/get-player-stats/:id")
+    .get(getPlayerStats);
 
 export default router;

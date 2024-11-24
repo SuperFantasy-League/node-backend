@@ -1,31 +1,42 @@
 import asyncHandler from 'express-async-handler';
 
 const getTeams = asyncHandler(async(req, res) => {
-    const {page} = req.query;
    
-    let response;
-    let responseData = {}
+    let response1, response2;
+    let responseData = {};
 
     try {
-        response = await fetch(
-            `${process.env.SPORTY_MONK_BASE_URL}teams?page=${page}&per_page=100&include=players`,
+        response1 = await fetch(
+            `${process.env.API_FOOTBALL_BASE_URL_V1}teams/league/2`,
             {
                 method: "GET",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `${process.env.SPORTY_MONK_API_TOKEN}`
+                    'x-rapidapi-key': `${process.env.API_FOOTBALL_API_KEY}`,
+                    'x-rapidapi-host': `${process.env.API_HOST}`
                 },
             }
         )
 
-        response = await response.json();
+        response2 = await fetch(
+            `${process.env.API_FOOTBALL_BASE_URL_V1}teams/league/3`,
+            {
+                method: "GET",
+                headers: {
+                    'x-rapidapi-key': `${process.env.API_FOOTBALL_API_KEY}`,
+                    'x-rapidapi-host': `${process.env.API_HOST}`
+                },
+            }
+        )
+
+        response1 = await response1.json();
+        response2 =await response2.json();
 
         responseData = {
             status: "success",
-            response
+            response: [...response1.api.teams, ...response2.api.teams]
         }
     } catch (err) {
-    //   console.log('Team fetch error ', err);  
+      console.log('Team fetch error ', err);  
 
       responseData = {
             status: "failed",
@@ -58,12 +69,12 @@ const getTeam = asyncHandler(async(req, res) => {
 
     try {
         response = await fetch(
-            `${process.env.SPORTY_MONK_BASE_URL}teams/${id}?&include=players`,
+            `${process.env.API_FOOTBALL_BASE_URL}players?team=${id}&season=${process.env.SEASON_YEAR}`,
             {
                 method: "GET",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `${process.env.SPORTY_MONK_API_TOKEN}`
+                    'x-rapidapi-key': `${process.env.API_FOOTBALL_API_KEY}`,
+                    'x-rapidapi-host': `${process.env.API_HOST}`
                 },
             }
         )
@@ -72,57 +83,7 @@ const getTeam = asyncHandler(async(req, res) => {
 
         responseData = {
             status: "success",
-            response
-        }
-    } catch (err) {
-    //   console.log('Team fetch error ', err);  
-
-      responseData = {
-            status: "failed",
-            response: err
-        }
-    }
-    
-    if(responseData.status === "failed") {
-
-        res.status(400).json({
-            status: 400,
-            message: 'Request failed.',
-            data: responseData
-        });
-
-    }
-
-    res.status(200).json({
-        status: 200,
-        message: 'Request successful.',
-        data: responseData
-    });
-})
-
-const searchForTeam = asyncHandler(async(req, res) => {
-    const {search} = req.query;
-   
-    let response;
-    let responseData = {}
-
-    try {
-        response = await fetch(
-            `${process.env.SPORTY_MONK_BASE_URL}teams/search/${search}?include=players`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `${process.env.SPORTY_MONK_API_TOKEN}`
-                },
-            }
-        )
-
-        response = await response.json();
-
-        responseData = {
-            status: "success",
-            response
+            response: response.response
         }
     } catch (err) {
     //   console.log('Team fetch error ', err);  
@@ -152,6 +113,5 @@ const searchForTeam = asyncHandler(async(req, res) => {
 
 export {
     getTeams,
-    searchForTeam,
     getTeam
 }
