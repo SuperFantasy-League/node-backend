@@ -3,7 +3,7 @@ import User from "../models/UserModel.js";
 
 const registerUser = asyncHandler(async(req, res) => {
 
-    const {address, rosterName} = req.body;
+    const {address} = req.body;
 
     const foundUser = await User.findOne({address});
 
@@ -19,7 +19,7 @@ const registerUser = asyncHandler(async(req, res) => {
 
     const user = await User.create({
         address,
-        rosterName: rosterName,
+        rosterName: "",
         roster: []
     })
 
@@ -29,6 +29,38 @@ const registerUser = asyncHandler(async(req, res) => {
         status: 201,
         message: 'User registered.',
         data: user
+    })
+})
+
+const uploadRoster = asyncHandler(async(req, res) => {
+
+    const {
+        address,
+        rosterName,
+        roster,
+    } = req.body
+
+    const foundUser = await User.findOne({address});
+
+    if(!foundUser) {
+        return(
+            res.status(400).json({
+                status: 400,
+                message: 'User does not exist.',
+                data: {}
+            })
+        )
+    }
+
+    foundUser.rosterName = rosterName;
+    foundUser.roster = roster;
+
+    const response = await foundUser.save();
+
+    res.status(200).json({
+        status: 200,
+        message: 'Roster upload successful.',
+        data: response
     })
 })
 
@@ -129,5 +161,6 @@ export {
     registerUser,
     addToRoster,
     removeFromRoster,
-    getUserRoster
+    getUserRoster,
+    uploadRoster
 }

@@ -4,7 +4,8 @@ import {
     registerUser,
     addToRoster,
     removeFromRoster,
-    getUserRoster
+    getUserRoster,
+    uploadRoster
 } from "../controller/userController.js";
 
 const router = express.Router();
@@ -24,5 +25,9 @@ router
 router
     .route("/get-roster")
     .post(getUserRoster);
+
+router
+    .route("/upload-roster")
+    .patch(uploadRoster);
 
 export default router;

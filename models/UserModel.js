@@ -97,7 +97,8 @@ const userSchema = mongoose.Schema({
 
     rosterName:{
         type: String,
-        required: true
+        required: false,
+        default:  ""
     },
 
     roster: [playerSchema]
