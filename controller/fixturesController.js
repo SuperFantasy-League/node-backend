@@ -21,7 +21,7 @@ const getLeagueFixtures = asyncHandler(async(req, res) => {
 
         responseData = {
             status: "success",
-            response: response.response
+            response: response.response.reverse()
         }
     } catch (err) {
       console.log('Fixtures fetch error ', err);  
@@ -71,7 +71,7 @@ const getTeamFixtures = asyncHandler(async(req, res) => {
 
         responseData = {
             status: "success",
-            response: response.response
+            response: response.response.reverse()
         }
     } catch (err) {
       console.log('Fixtures fetch error ', err);  
