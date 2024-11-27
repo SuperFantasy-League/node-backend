@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+// import { fixtures } from '../utils/fixDB.js';
 
 const getLeagueFixtures = asyncHandler(async(req, res) => {
    
@@ -19,9 +20,15 @@ const getLeagueFixtures = asyncHandler(async(req, res) => {
 
         response = await response.json();
 
+        let today = new Date();
+        let tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 7);
+
+        const fixtures = response.response.filter((cur) => new Date(cur.fixture.date) >= today && new Date(cur.fixture.date) <= tomorrow)
+
         responseData = {
             status: "success",
-            response: response.response.reverse()
+            response: fixtures
         }
     } catch (err) {
       console.log('Fixtures fetch error ', err);  
@@ -69,9 +76,15 @@ const getTeamFixtures = asyncHandler(async(req, res) => {
 
         response = await response.json();
 
+        let today = new Date();
+        let tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 7);
+
+        const fixtures = response.response.filter((cur) => new Date(cur.fixture.date) >= today && new Date(cur.fixture.date) <= tomorrow)
+
         responseData = {
             status: "success",
-            response: response.response.reverse()
+            response: fixtures
         }
     } catch (err) {
       console.log('Fixtures fetch error ', err);  
