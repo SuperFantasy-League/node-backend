@@ -22,7 +22,7 @@ const getLeagueFixtures = asyncHandler(async(req, res) => {
 
         let today = new Date();
         let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 7);
+        tomorrow.setDate(tomorrow.getDate() + 14);
 
         const fixtures = response.response.filter((cur) => new Date(cur.fixture.date) >= today && new Date(cur.fixture.date) <= tomorrow)
 
@@ -78,7 +78,7 @@ const getTeamFixtures = asyncHandler(async(req, res) => {
 
         let today = new Date();
         let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 7);
+        tomorrow.setDate(tomorrow.getDate() + 14);
 
         const fixtures = response.response.filter((cur) => new Date(cur.fixture.date) >= today && new Date(cur.fixture.date) <= tomorrow)
 
